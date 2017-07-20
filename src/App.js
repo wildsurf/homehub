@@ -1,10 +1,27 @@
-import {StackNavigator} from 'react-navigation';
+import React, {Component} from 'react';
+import {Tabs} from './config/router';
+import {COLOR, ThemeProvider} from 'react-native-material-ui';
+import {View} from 'react-native';
 
-import routes from './routes';
-import HomeScreen from './screens/HomeScreen';
-import AccountScreen from './screens/AccountScreen';
+const uiTheme = {
+	palette: {
+		primaryColor: COLOR.green500
+	},
+	toolbar: {
+		container: {
+			height: 50
+		}
+	}
+};
 
-export default StackNavigator({
-	[routes.home]: {screen: HomeScreen},
-	[routes.account]: {screen: AccountScreen}
-});
+class App extends React.Component {
+	render() {
+		return (
+			<ThemeProvider uiTheme={uiTheme}>
+				<Tabs />
+			</ThemeProvider>
+		);
+	}
+}
+
+export default App;

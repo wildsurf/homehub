@@ -1,21 +1,15 @@
 import React, {Component} from 'react';
 import {Button} from 'react-native-material-ui';
+import {View} from 'react-native';
 
-import routes from '../routes';
+import AccountForm from '../components/AccountForm';
 
 export default class AccountScreen extends React.Component {
-  static navigationOptions = {
-    title: 'Account',
-  };
-  render() {
-    const { navigate } = this.props.navigation;
-    return (
-      <Button
-        text="Go back to Home"
-        onPress={() =>
-          navigate(routes.home)
-        }
-      />
-    );
-  }
+	render() {
+		return (
+			<View>
+                <AccountForm></AccountForm>
+			</View>
+		);
+	}
 }
