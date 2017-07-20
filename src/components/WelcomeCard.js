@@ -10,7 +10,7 @@ export default class WelcomeCard extends Component {
 				<Text style={style.heading}>Welcome</Text>
 				<Text style={style.text}>To get started, add an account to your list of accounts.</Text>
 				<Button
-					onPress={() => navigate('settings')}
+					onPress={() => navigate('account')}
 					style={{...style.text, ...style.link}}
 					text="Add an account"
 				/>

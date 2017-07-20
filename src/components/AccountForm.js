@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {ScrollView, View} from 'react-native';
+import {ScrollView, View, AsyncStorage} from 'react-native';
 import {Button, Card} from 'react-native-material-ui';
 import TextField from 'react-native-md-textinput';
+
+export const STORAGE_ACCOUNT = '@accounts';
 
 export default class AccountForm extends React.Component {
 	state = {
@@ -9,13 +11,29 @@ export default class AccountForm extends React.Component {
 		token: ''
 	};
 
-	saveAccount = () => {
-		const {name, token} = this.state;
-		console.log(name, token);
+	saveAccount = async () => {
+		const {name, token, existingAccounts} = this.state;
+		let accounts = await AsyncStorage.getItem(STORAGE_ACCOUNT);
+
+        if (accounts) {
+            accounts = JSON.parse(accounts);
+        } else {
+            accounts = [];
+        }
+
+		accounts.push({name, token});
+
+		try {
+			await AsyncStorage.setItem(STORAGE_ACCOUNT, JSON.stringify(accounts));
+			this.props.navigate('settings');
+		} catch (error) {}
+	};
+
+	cancel = () => {
+		this.props.navigate('settings');
 	};
 
 	render() {
-		const {name, token} = this.state;
 		return (
 			<ScrollView>
 				<Card>
@@ -25,14 +43,18 @@ export default class AccountForm extends React.Component {
 							label={'Name of Device'}
 							highlightColor={'#0099cc'}
 							onChangeText={name => this.setState({name})}
+							value={this.state.name}
 						/>
 						<TextField
 							style={styles.input}
 							label={'Token'}
 							highlightColor={'#0099cc'}
 							onChangeText={token => this.setState({token})}
+							value={this.state.token}
 						/>
-						<Button text="Save" onPress={() => this.saveAccount()} />
+						<Button primary text="Save" raised onPress={() => this.saveAccount()} />
+						<Button text="Load" onPress={() => this.load()} />
+						<Button text="Cancel" onPress={() => this.cancel()} />
 					</View>
 				</Card>
 			</ScrollView>

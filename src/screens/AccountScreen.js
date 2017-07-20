@@ -6,9 +6,10 @@ import AccountForm from '../components/AccountForm';
 
 export default class AccountScreen extends React.Component {
 	render() {
+        const {navigate} = this.props.navigation;
 		return (
 			<View>
-                <AccountForm></AccountForm>
+                <AccountForm navigate={navigate}></AccountForm>
 			</View>
 		);
 	}

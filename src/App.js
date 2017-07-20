@@ -5,7 +5,7 @@ import {View} from 'react-native';
 
 const uiTheme = {
 	palette: {
-		primaryColor: COLOR.green500
+		primaryColor: COLOR.blue400
 	},
 	toolbar: {
 		container: {
