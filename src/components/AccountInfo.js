@@ -1,24 +1,45 @@
 import React, {Component} from 'react';
-import {Card} from 'react-native-material-ui';
-import {Text} from 'react-native';
+import {Card, Button} from 'react-native-material-ui';
+import {Text, View} from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class AccountScreen extends React.Component {
 	render() {
-        const {name, token} = this.props.account;
+		const {account: {name, token}, onRemove} = this.props;
 		return (
 			<Card>
-                <Text style={styles.name}>{name}</Text>
-                <Text style={styles.token}>{token}</Text>
+				<View style={styles.card}>
+					<Text style={styles.name}>
+						{name}
+					</Text>
+					<Text style={styles.token}>
+						{token}
+					</Text>
+					<Button onPress={() => onRemove()} style={styles.icon} icon="close" text="" />
+				</View>
 			</Card>
 		);
 	}
 }
 
 const styles = {
-    name: {
-        fontSize: 14
-    },
-    token: {
-        fontSize: 20
-    }
-}
+	card: {
+		padding: 10
+	},
+	name: {
+		fontSize: 14
+	},
+	token: {
+		fontSize: 20
+	},
+	icon: {
+		container: {
+			position: 'absolute',
+			right: -5,
+			top: 15
+		},
+		text: {
+			color: '#ddd'
+		}
+	}
+};

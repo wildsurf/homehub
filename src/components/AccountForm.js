@@ -38,6 +38,7 @@ export default class AccountForm extends React.Component {
 			<ScrollView>
 				<Card>
 					<View style={styles.card}>
+                        <Button icon="close" text="" style={styles.icon} onPress={() => this.cancel()} />
 						<TextField
 							style={styles.input}
 							label={'Name of Device'}
@@ -53,8 +54,6 @@ export default class AccountForm extends React.Component {
 							value={this.state.token}
 						/>
 						<Button primary text="Save" raised onPress={() => this.saveAccount()} />
-						<Button text="Load" onPress={() => this.load()} />
-						<Button text="Cancel" onPress={() => this.cancel()} />
 					</View>
 				</Card>
 			</ScrollView>
@@ -64,7 +63,16 @@ export default class AccountForm extends React.Component {
 
 const styles = {
 	card: {
-		paddingRight: 20,
-		paddingLeft: 20
+		padding: 20
+	},
+	icon: {
+		container: {
+			position: 'absolute',
+			right: -5,
+			top: 15
+		},
+		text: {
+			color: '#ddd'
+		}
 	}
 };
