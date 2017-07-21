@@ -4,6 +4,14 @@ import {Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default class AccountScreen extends React.Component {
+	getTotalEnergy() {
+		const {devices} = this.props.accountInfo;
+		const accEnergy = devices.reduce((acc, val) => {
+			return acc + val.energy;
+		}, 0);
+		return `${accEnergy} ${devices[0].units}`;
+	}
+
 	render() {
 		const {name, devices} = this.props.accountInfo;
 		return (
@@ -18,14 +26,23 @@ export default class AccountScreen extends React.Component {
 							</View>
 							<View style={styles.energy}>
 								<Text>
-									{d.energy} kW
+									{d.energy} {d.units}
 								</Text>
 							</View>
 						</View>
 					)}
-					<Text>
-						{name}
-					</Text>
+					<View style={styles.device}>
+						<View style={styles.name}>
+							<Text>
+								{name}
+							</Text>
+						</View>
+						<View style={styles.energy}>
+							<Text>
+								{this.getTotalEnergy()}
+							</Text>
+						</View>
+					</View>
 				</View>
 			</Card>
 		);
@@ -41,10 +58,9 @@ const styles = {
 		flexDirection: 'row'
 	},
 	name: {
-		flex: 4,
-        
+		flex: 4
 	},
 	energy: {
-		flex: 1,
+		flex: 1
 	}
 };

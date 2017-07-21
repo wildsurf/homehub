@@ -4,6 +4,7 @@ import {AsyncStorage, View, Text} from 'react-native';
 import {STORAGE_ACCOUNT} from '../components/AccountForm';
 import WelcomeCard from '../components/WelcomeCard';
 import EnergyInfoCard from '../components/EnergyInfoCard';
+import {getCurrentValuesSummary} from '../services/efergyService';
 
 export default class DataScreen extends React.Component {
 	state = {
@@ -33,21 +34,19 @@ export default class DataScreen extends React.Component {
 			accounts = [];
 		}
 
-		accounts.forEach(acc => {
+		for (let i = 0; i < accounts.length; i++) {
+            const acc = accounts[i];
+            const info = await getCurrentValuesSummary(acc.token);
 			accountInfos.push({
 				name: acc.name,
-				devices: [
-					{
-						name: 'Haus',
-						energy: 20
-					},
-					{
-						name: 'Pool',
-						energy: 10
-					}
-				]
+				devices: info.map(i => ({
+                    name: i.sid,
+                    energy: i.data[0][Object.keys(i.data[0])[0]],
+                    units: i.units,
+                    age: i.age
+                }))
 			});
-		});
+        }
 
 		this.setState({
 			accountInfos,
