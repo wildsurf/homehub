@@ -14,11 +14,37 @@ const uiTheme = {
 	}
 };
 
+function getCurrentRouteName(navigationState) {
+    if (!navigationState) {
+        return null;
+    }
+    const route = navigationState.routes[navigationState.index];
+    if (route.routes) {
+        return getCurrentRouteName(route);
+    }
+    return route.routeName;
+}
+
 class App extends React.Component {
+    state = {
+        currentRoute: null
+    };
+
+    updateCurrentState = (prevState, currentState) => {
+        const prevRoute = getCurrentRouteName(prevState);
+        const currentRoute = getCurrentRouteName(currentState);
+        if (prevRoute !== currentRoute) {
+            this.setState({
+                currentRoute
+            });
+        }
+    };
+
 	render() {
+        const {currentRoute} = this.state;
 		return (
 			<ThemeProvider uiTheme={uiTheme}>
-				<Tabs />
+				<Tabs onNavigationStateChange={this.updateCurrentState} screenProps={{currentRoute}} />
 			</ThemeProvider>
 		);
 	}

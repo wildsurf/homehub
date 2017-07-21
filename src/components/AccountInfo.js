@@ -36,7 +36,7 @@ const styles = {
 		container: {
 			position: 'absolute',
 			right: -5,
-			top: 15
+			top: 5
 		},
 		text: {
 			color: '#ddd'
